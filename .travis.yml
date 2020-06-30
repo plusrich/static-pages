@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+    - "12"
+services:
+    - docker
+
+before_install:
+    - npm install --registry=https://registry.npm.taobao.org
+
+script:
+    - npm run build
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker build plusrich/docker-test:latest -t 
+    - docker push plusrich/docker-test:latest
